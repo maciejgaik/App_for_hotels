@@ -18,7 +18,7 @@
 class employee{
     MYSQL* mysql;
 public:
-    employee(MYSQL* _mysql) : mysql{_mysql} {}
+    employee(MYSQL* _mysql) : mysql(_mysql) {}
     bool newEmployee();
     bool findEmployee();
 };

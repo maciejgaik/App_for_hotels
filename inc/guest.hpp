@@ -20,7 +20,7 @@ class guest{
     bool checkGuest(const char* name, const char* surname,const char* city, const char* street, const char *houseNumber);
     MYSQL* mysql;
 public:
-    guest(MYSQL* _mysql) : mysql{_mysql} {}
+    guest(MYSQL* _mysql) : mysql(_mysql) {}
     bool newGuest(const char* name, const char* surname, const char *phone, const char* country, const char *zipCode, const char* city, const char* street, const char *houseNumber, const char *flatNumber);
     
 };

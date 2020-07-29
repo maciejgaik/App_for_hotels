@@ -18,7 +18,7 @@
 class reservation{
     MYSQL* mysql;
 public:
-    reservation(MYSQL* _mysql) : mysql{_mysql} {}
+    reservation(MYSQL* _mysql) : mysql(_mysql) {}
     bool newReservation(const char* startDate, const char* endDate, const char* roomID, const char* guestID);
     struct tm* getDate(const char* date);
     bool comapreDate(struct tm* date1, struct tm* date2);
