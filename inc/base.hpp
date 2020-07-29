@@ -32,22 +32,14 @@ public:
         return mysql_errno(&mysql);
     }
     
-    bool newGuest(const char* name, const char* surname, const char *phone, const char* country, const char *zipCode, const char* city, const char* street, const char *houseNumber, const char *flatNumber, const char* startDate);
-    bool newEmployee();
-    bool newReservation();
+    bool newReserForNewGuest(const char* name, const char* surname, const char *phone, const char* country, const char *zipCode, const char* city, const char* street, const char *houseNumber, const char *flatNumber, const char* startDate, const char* endDate, const char* roomID);
     bool findGuest();
-    bool findEmployee();
     bool edit();
     bool findRoom();
     
-    
-    
 private:
     MYSQL mysql;
-    unsigned getNewID(const char* table);
-    bool checkGuest(const char* name, const char* surname,const char* city, const char* street, const char *houseNumber);
-    struct tm* getDate(const char* date);
-    bool comapreDate(struct tm* date1, struct tm* date2);
+    unsigned getNewID(const char *table);
 };
 
 #endif /* base_hpp */

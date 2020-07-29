@@ -13,11 +13,12 @@ int main(int argc, const char * argv[]) {
     base myBase;
     if(myBase.connect()){
         std::cout<<"POLACZONO Z BAZA!"<<std::endl;
-        if(myBase.newGuest("Maciej", "Gaik", "664754254", "Poland", "97500", "Radomsko", "Klekotowe", "11", "0", "23.03.2019")){
-            std::cout<<"Pomysle dodano goscia"<<std::endl;
-        }else{
-            std::cout<<"Istnieje juz gosc o takich danych"<<std::endl;
-        }
+//        if(myBase.newGuest("Maciej", "Gaik", "664754254", "Poland", "97500", "Radomsko", "Klekotowe", "11", "0", "23.03.2019", "30.02.2019", "1")){
+//            std::cout<<"Pomysle dodano goscia"<<std::endl;
+//        }else{
+//            std::cout<<"Istnieje juz gosc o takich danych"<<std::endl;
+//        }
+        //std::cout<<myBase.chceckRoom("20.02.2009", "20.02.2010", "1");
     }
     else{
         std::cout<<"BLAD POLACZENIA: " << myBase.getErrorNumber() <<std::endl;
