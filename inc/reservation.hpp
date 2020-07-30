@@ -14,17 +14,23 @@
 #include <ctime>
 #include <cstring>
 #include <ctime>
+#include "my_error.hpp"
 
-class reservation{
+enum class error{
+    QUERY_ERROR
+};
+
+class Reservation{
     MYSQL* mysql;
 public:
-    reservation(MYSQL* _mysql) : mysql(_mysql) {}
-    bool newReservation(const char* startDate, const char* endDate, const char* roomID, const char* guestID);
-    struct tm* getDate(const char* date);
-    bool comapreDate(struct tm* date1, struct tm* date2);
-    bool checkDate(const char* startDate, const char* endDate);
-    bool chceckRoom(const char* startDate, const char* endDate, const char* roomID);
-
+    void init(MYSQL* _mysql){ mysql = _mysql; };
+    bool new_reservation(const char* start_date, const char* end_date, const char* room_ID, unsigned guest_ID);
+    struct tm* get_date(const char* date);
+    bool comapre_date(struct tm* date1, struct tm* date2);
+    bool check_date(const char* start_date, const char* end_date);
+    bool check_room(const char* start_date, const char* end_date, const char* room_ID);
+    unsigned get_new_ID(const char *table);
+    unsigned calc_nights(struct tm* date1, struct tm* date2);
 };
 
 #endif /* reservation_hpp */

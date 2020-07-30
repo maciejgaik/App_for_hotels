@@ -14,15 +14,17 @@
 #include <ctime>
 #include <cstring>
 #include <ctime>
+#include <climits>
+#include "my_error.hpp"
 
-class guest{
+class Guest{
     unsigned getNewID(const char* table);
-    bool checkGuest(const char* name, const char* surname,const char* city, const char* street, const char *houseNumber);
     MYSQL* mysql;
+    unsigned checkGuest(const char* name, const char* surname,const char* city, const char* street, const char *houseNumber);
+//    Error error;
 public:
-    guest(MYSQL* _mysql) : mysql(_mysql) {}
-    bool newGuest(const char* name, const char* surname, const char *phone, const char* country, const char *zipCode, const char* city, const char* street, const char *houseNumber, const char *flatNumber);
-    
+    void init(MYSQL* _mysql){ mysql = _mysql; };
+    unsigned newGuest(const char* name, const char* surname, const char *phone, const char* country, const char *zipCode, const char* city, const char* street, const char *houseNumber, const char *flatNumber);
 };
 
 #endif /* guest_hpp */

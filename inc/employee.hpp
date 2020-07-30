@@ -14,11 +14,12 @@
 #include <ctime>
 #include <cstring>
 #include <ctime>
+#include "my_error.hpp"
 
-class employee{
+class Employee{
     MYSQL* mysql;
 public:
-    employee(MYSQL* _mysql) : mysql(_mysql) {}
+    void init(MYSQL* _mysql){ mysql = _mysql; };
     bool newEmployee();
     bool findEmployee();
 };

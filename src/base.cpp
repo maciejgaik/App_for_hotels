@@ -23,37 +23,10 @@ unsigned base::getNewID(const char *table){
     return atoi(row[0])+1;
 }
 
-bool base::newReserForNewGuest(const char* name, const char* surname, const char *phone, const char* country, const char *zipCode, const char* city, const char* street, const char *houseNumber, const char *flatNumber, const char* startDate, const char* endDate, const char* roomID){
+bool base::new_reser_for_new_guest(const char* name, const char* surname, const char *phone, const char* country, const char *zip_code, const char* city, const char* street, const char *house_number, const char *flat_number, const char* start_date, const char* end_date, const char* room_ID){
+    
+    unsigned guest_ID = guest.newGuest(name, surname, phone, country, zip_code, city, street, house_number, flat_number);
+    reservation.new_reservation(start_date, end_date, room_ID, guest_ID);
 
-//    getDate(startDate);
-//    if(checkGuest(name, surname, city, street, houseNumber)){
-//        return false;
-//    }
-    
-    /*Query making*/
-    string query = "CALL hotelDB.NEW_GUEST(";
-    query+=to_string(getNewID("guest"));
-    query+=", \"";
-    query+=name;
-    query+="\", \"";
-    query+=surname;
-    query+="\", ";
-    query+=phone;
-    query+=", \"";
-    query+=country;
-    query+="\", ";
-    query+=zipCode;
-    query+=", \"";
-    query+=city;
-    query+="\", \"";
-    query+=street;
-    query+="\", ";
-    query+=houseNumber;
-    query+=", ";
-    query+=flatNumber;
-    query+=")";
-    
-    /*Query executing*/
-    mysql_query(&mysql, query.c_str());
     return true;
 }

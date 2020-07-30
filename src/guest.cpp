@@ -10,20 +10,25 @@
 
 using namespace std;
 
-unsigned guest::getNewID(const char *table){
+unsigned Guest::getNewID(const char *table){
     
     /*Query making*/
     string query="Select MAX(ID) from hotelDB." + string(table);
     
     /*Query executing*/
-    mysql_query(mysql, query.c_str());
-    MYSQL_ROW row = mysql_fetch_row(mysql_store_result(mysql));
+    if(mysql_query(mysql, query.c_str())){
+        throw my_error::QUERY_ERROR;
+    }
     
-    /*Return max ID in table + 1*/
-    return atoi(row[0])+1;
+    MYSQL_ROW row = mysql_fetch_row(mysql_store_result(mysql));
+    //cout<<row[0];
+    if(row){
+        return atoi(row[0])+1;
+    }
+    else return 0;
 }
 
-bool guest::checkGuest(const char *name, const char *surname, const char *city, const char *street, const char *houseNumber){
+unsigned Guest::checkGuest(const char *name, const char *surname, const char *city, const char *street, const char *houseNumber){
     
     /*Query making*/
     string query = "SELECT * FROM GUEST WHERE G_NAME = \"";
@@ -38,18 +43,30 @@ bool guest::checkGuest(const char *name, const char *surname, const char *city, 
     query+=houseNumber;
     
     /*Query executing*/
-    mysql_query(mysql, query.c_str());
+    if(mysql_query(mysql, query.c_str())){
+        throw my_error::QUERY_ERROR;
+    }
     
-    /*If there is the same guest return true, else false*/
-    if(mysql_num_rows(mysql_store_result(mysql))) return true;
-    else return false;
+    MYSQL_ROW row = mysql_fetch_row(mysql_store_result(mysql));
+    /*If there is the same guest return ID, else INT_MAX*/
+    if(row){
+        return atoi(row[0]);
+    }
+    else return INT_MAX;
 }
 
-bool guest::newGuest(const char* name, const char* surname, const char *phone, const char* country, const char *zipCode, const char* city, const char* street, const char *houseNumber, const char *flatNumber){
+unsigned Guest::newGuest(const char* name, const char* surname, const char *phone, const char* country, const char *zipCode, const char* city, const char* street, const char *houseNumber, const char *flatNumber){
+    
+    unsigned ID = checkGuest(name, surname, city, street, houseNumber);
 
+    /*Chechking if there is the same guest*/
+    /*If yes return ID*/
+    if(ID != INT_MAX) return ID;
+    
+    ID = getNewID("guest");
     /*Query making*/
     string query = "CALL hotelDB.NEW_GUEST(";
-    query+=to_string(getNewID("guest"));
+    query+=to_string(ID);
     query+=", \"";
     query+=name;
     query+="\", \"";
@@ -71,7 +88,9 @@ bool guest::newGuest(const char* name, const char* surname, const char *phone, c
     query+=")";
     
     /*Query executing*/
-    mysql_query(mysql, query.c_str());
-    return true;
+    if(mysql_query(mysql, query.c_str())){
+        throw my_error::QUERY_ERROR;
+    }
+    return ID;
 }
 
